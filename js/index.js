@@ -1,3 +1,4 @@
+
 function register(event) {
     event.preventDefault();
     const firstName = document.querySelector('#firstName').value;
@@ -23,21 +24,34 @@ function register(event) {
             passwordType: "Cleartext-Password"
         };
 
-        console.log(data)
-            /* $.when(
+        //console.log(data)
+             $.when(
                  $.ajax({
                      url: "http://172.16.0.144/daloradius/mng-new.php",
                      data: data,
                      dataType: "text/html",
                      type: "POST",
                      error: function(err) {
-                         console.log("an error has occured")
-                         console.warn(error)
-                     }
+                         //console.log("an error has occured")
+             		//console.warn(err)
+			if(err.responseText.indexOf(`user already exist in database`) !== -1)
+				 document.querySelector('#errorMessage').innerHTML = `<div class="alert alert-danger">Email is already in use</div>`
+			else{
+				 document.querySelector('#errorMessage').innerHTML = `<div class="alert alert-success">Registred</div>`
+				setTimeout(function(){ window.location.href = "http://172.16.0.7:8004/index.php?zone=portail_captif_esprit" },2000)
+				//window.location.href = "http://172.16.0.7:8004/index.php?zone=portail_captif_esprit"
+				//document.querySelector('#errorMessage').innerHTML = `<div class="alert alert-success">Registred</div>`
+			    }
+		    }
+
                  })
              ).done((result) => {
-                 console.log("result")
-             })*/
+		 document.querySelector('#errorMessage').innerHTML = `<div class="alert alert-success">Registred</div>`
+                setTimeout(function(){ window.location.href = "http://172.16.0.7:8004/index.php?zone=portail_captif_esprit" },2000)
+
+                 //console.log("result")
+		//document.querySelector('#errorMessage').innerHTML = ` <div class="alert alert-success"> registred successfully </div> `
+             })
     }
 }
 
